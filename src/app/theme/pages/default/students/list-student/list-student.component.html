@@ -1,0 +1,28 @@
+<div class="">
+  <mat-table [dataSource]="dataSource">
+     <ng-container matColumnDef="dob">
+      <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.dob}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let user"> VE{{user.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+      <mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.first_name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last_name">
+      <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{user.last_name}} </mat-cell>
+    </ng-container>
+
+   
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click) = "onRowClicked(row)"></mat-row>
+
+  </mat-table>
+</div>
