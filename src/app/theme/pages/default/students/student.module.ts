@@ -4,8 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {  MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, 
-         MatSortModule, MatTableModule, MatFormFieldModule} from '@angular/material';
+import {
+    MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+    MatSortModule, MatTableModule, MatFormFieldModule, MatButtonModule
+} from '@angular/material';
 
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
@@ -22,7 +24,7 @@ const routes: Routes = [
             },
             {
                 "path": "list",
-                "component" : ListStudentComponent
+                "component": ListStudentComponent
             }
         ]
     }
@@ -40,7 +42,8 @@ const routes: Routes = [
         MatSortModule,
         MatFormFieldModule,
         MatInputModule,
-        MatProgressSpinnerModule        
+        MatProgressSpinnerModule,
+        MatButtonModule
     ], exports: [
         RouterModule
     ], declarations: [
