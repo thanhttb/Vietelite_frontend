@@ -6,13 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
     MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
-    MatSortModule, MatTableModule, MatFormFieldModule, MatButtonModule
+    MatSortModule, MatTableModule, MatFormFieldModule, MatButtonModule, MatDialogModule,
+    MatDatepickerModule,    
+    MatListModule, MatSelectModule, MatSidenavModule,
 } from '@angular/material';
+import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { ListStudentComponent } from './list-student/list-student.component';
+import { EditStudentComponent } from './edit-student/edit-student.component';
 const routes: Routes = [
     {
         "path": "",
@@ -43,12 +47,17 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatProgressSpinnerModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDialogModule,
+        MatDatepickerModule,    
+        MatListModule, 
+        MatSelectModule, MatSidenavModule,MatMomentDateModule
     ], exports: [
         RouterModule
     ], declarations: [
         AddStudentComponent,
         ListStudentComponent,
-    ]
+        EditStudentComponent,
+    ], entryComponents: [EditStudentComponent]
 })
 export class StudentModule { }
