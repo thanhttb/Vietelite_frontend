@@ -76,19 +76,22 @@ export class ListStudentComponent implements OnInit {
     }
     //EDIT
 
-    openDialog(rowm,){
+    openDialog(row){
         const dialogConfig = new MatDialogConfig();
-
+        console.log('Row Clicked: ', row);
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
 
         dialogConfig.data = {
-            id: 1,
-            first_name: 'Tran',
-            last_name: 'Thanh'
-        }
+            id: row.student_id,
+            first_name: row.first_name,
+            last_name: row.last_name,
+            dob: row.dob,
+            phone_1: row.phone_1,
+            phone_2:row.phone_2,
+            parent_email: row.parent_email,       
 
-        this.dialog.open(EditStudentComponent, dialogConfig);
+        }        
 
         const dialogRef = this.dialog.open(EditStudentComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
@@ -99,6 +102,11 @@ export class ListStudentComponent implements OnInit {
         console.log('Row Clicked: ', row);
     }
 }
+
+
+
+
+
 export class StudentDataSource extends DataSource<Student> {
     private studentSubject = new BehaviorSubject<Student[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -119,11 +127,11 @@ export class StudentDataSource extends DataSource<Student> {
         this.loadingSubject.next(true);
 
         this.studentService.findStudents(studentId, filter, sortDirection, pageIndex, pageSize)
-                                .pipe(
-                                    catchError(() => of([])),
-                                    finalize(() => this.loadingSubject.next(false))
-                                    )
-                                .subscribe( students => this.studentSubject.next(students));
+            .pipe(
+                catchError(() => of([])),
+                finalize(() => this.loadingSubject.next(false))
+                )
+            .subscribe( students => this.studentSubject.next(students));
     }
 
 

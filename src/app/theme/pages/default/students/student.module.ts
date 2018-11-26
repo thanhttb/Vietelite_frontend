@@ -51,7 +51,9 @@ const routes: Routes = [
         MatDialogModule,
         MatDatepickerModule,    
         MatListModule, 
-        MatSelectModule, MatSidenavModule,MatMomentDateModule
+        MatSelectModule, 
+        MatSidenavModule,
+        MatMomentDateModule
     ], exports: [
         RouterModule
     ], declarations: [

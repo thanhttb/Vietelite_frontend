@@ -4,29 +4,24 @@
   
     <mat-form-field>
         <input matInput
-                placeholder="Course Description"
-               formControlName="description">
+                placeholder="Họ"
+               formControlName="first_name">
     </mat-form-field>
     <mat-form-field>
-
-        <mat-select placeholder="Select category"
-            formControlName="category">
-
-            <mat-option value="BEGINNER">
-                Beginner</mat-option>
-            <mat-option value="INTERMEDIATE">
-                Intermediate</mat-option>
-            <mat-option value="ADVANCED">
-                Advanced</mat-option>
-
-        </mat-select>
-
+        <input matInput
+                placeholder="Tên"
+               formControlName="last_name">
     </mat-form-field>
-
+    <mat-form-field>
+        <input matInput
+                placeholder="Tên"
+               formControlName="last_name">
+    </mat-form-field>
+    
     <mat-form-field>
 
         <input matInput [matDatepicker]="myDatepicker"
-            formControlName="releasedAt">
+            formControlName="dob">
 
         <mat-datepicker-toggle matSuffix
                                [for]="myDatepicker">
