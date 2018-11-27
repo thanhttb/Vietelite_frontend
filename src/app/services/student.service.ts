@@ -17,7 +17,7 @@ export class StudentService {
     countStudent():Observable<any>{
         return this.http.get(this.count_students_url);
     }
-    findStudents(studentID: number, filter: string = '', sortOrder = 'asc', pageNumber = 0, pageSize = 5): Observable<Student[]> {
+    findStudents(studentID: number, filter: string = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<Student[]> {
             return this.http.get(this.find_student_url, {
             params: new HttpParams()
                 .set('studentId', studentID.toString())

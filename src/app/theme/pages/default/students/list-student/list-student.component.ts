@@ -123,7 +123,7 @@ export class StudentDataSource extends DataSource<Student> {
         this.loadingSubject.complete();
     }
     loadStudent(studentId:number, filter = '', 
-                sortDirection = 'asc', pageIndex = 0, pageSize = 3){
+                sortDirection = 'asc', pageIndex = 0, pageSize = 10){
         this.loadingSubject.next(true);
 
         this.studentService.findStudents(studentId, filter, sortDirection, pageIndex, pageSize)

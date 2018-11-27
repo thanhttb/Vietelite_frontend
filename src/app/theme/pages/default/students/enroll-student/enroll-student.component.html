@@ -1,0 +1,255 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Tiếp nhận đầu vào
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Tiếp nhận đầu vào
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Ghi danh nhanh
+                        </span>
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                    <i class="la la-plus m--hide"></i>
+                    <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="m-dropdown__wrapper">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                            <div class="m-dropdown__content">
+                                <ul class="m-nav">
+                                    <li class="m-nav__section m-nav__section--first m--hide">
+                                        <span class="m-nav__section-text">
+                                            Quick Actions
+                                        </span>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-share"></i>
+                                            <span class="m-nav__link-text">
+                                                Activity
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                            <span class="m-nav__link-text">
+                                                Messages
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-info"></i>
+                                            <span class="m-nav__link-text">
+                                                FAQ
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                            <span class="m-nav__link-text">
+                                                Support
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                    <li class="m-nav__item">
+                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+                                            Submit
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Thông tin học sinh & Nguyện vọng
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form" [formGroup] = "studentForm" (ngSubmit) = "storeEnrolls(studentForm)">
+            <div class="m-portlet__body">
+             
+                <div class="m-form__section m-form__section--first">
+                        <div class="row">
+                            <div class="col-lg-4">                                
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-3 col-form-label">
+                                        Họ
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control m-input" placeholder="Học sinh" formControlName = "first_name" >
+                                        <!-- <div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)"
+                                            class="alert alert-danger">
+
+                                          <div *ngIf="first_name.errors.required">
+                                            Name is required.
+                                          </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-3 col-form-label">
+                                        Tên
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control m-input" placeholder="Học sinh"   placeholder="Tên Học sinh" formControlName = "last_name" >
+                                        
+                                    </div>
+                                </div>
+                                    <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Ngày sinh
+                                    </label>
+                                    <div class="col-lg-6 col-md-9 col-sm-12">
+                                        
+                                        <input class="form-control" placeholder="dd-mm-yyyy" name="dob" formControlName= "dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                                    </div>
+                                </div>
+                                <div formGroupName = "parentForm">
+
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-3 col-form-label">
+                                            Tên Phụ Huynh
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control m-input" placeholder="Tên Phụ Huynh" formControlName = "parent_name" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-3 col-form-label">
+                                            Điện thoại 
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-phone"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control m-input" placeholder="Điền SĐT" formControlName = "parent_phone_1">
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-3 col-form-label">
+                                            Email
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="email" class="form-control m-input" placeholder="Điền Email" formControlName = "parent_email" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8" formArrayName="enrollForm">
+                                <div class="row" 
+                                     *ngFor = "let enroll of studentForm.get('enrollForm').controls; let i = index"
+                                      [formGroup] = "enroll" >                                     
+                                    <div class="col-lg-3 form-group">
+                                        <label class="form- label" [attr.for] = "'subject_' + i">
+                                            Môn học
+                                        </label>
+                                        <input type="text" class="form-control m-input" placeholder="Toán, Văn.." formControlName = "subject" [attr.id]="'subject_'+i">
+                                    </div>
+                                    <div class="col-lg-2 form-group">
+                                        <label class="form-label" [attr.for] = "'class_' + i">
+                                            Khối lớp
+                                        </label>
+                                        <input type="number" min="1" max="12" placeholder="Eg: 3" class="form-control" [attr.id]="'class_'+i"  formControlName="class">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="form-label" [attr.for] = "'appointment_' + i">
+                                            Hẹn ngày KT
+                                        </label>
+                                        <input class="form-control" placeholder="dd-mm-yyyy" formControlName= "appointment" ngbDatepicker #a = "ngbDatepicker" (click)="a.toggle()" [attr.id]="'appointment_'+i">
+                                    </div>
+                                    <div class="col-lg-3">
+                                         <label class="form-label" [attr.for] = "'note_' + i">
+                                            Ghi chú
+                                        </label>
+                                        <textarea class="form-control" formControlName= "note" [attr.id] = "'note_' + i"></textarea> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        
+                                        <a (click) = "studentForm.get('enrollForm').removeAt(i)" data-repeater-delete="" class="btn btn-danger mt-repeater-delete">
+                                                                <i class="fa fa-close"></i> </a>
+                                    </div>
+                                </div>
+
+                                <a  (click)="studentForm.get('enrollForm').push(buildEnroll(''))" data-repeater-create="" class="btn btn-success mt-repeater-add">
+                                    <i class="fa fa-plus"></i> Thêm nguyện vọng </a>                               
+                               
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-6">  
+                            <button type="submit" class="btn btn-success" [disabled] = "studentForm.invalid">
+                                Submit
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    
+    
+</div>

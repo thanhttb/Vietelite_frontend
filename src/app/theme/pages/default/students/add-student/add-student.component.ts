@@ -3,7 +3,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-
+import { MatSnackBar } from '@angular/material';
 @Component({
     selector: 'app-add-student',
     templateUrl: './add-student.component.html',
@@ -27,7 +27,8 @@ export class AddStudentComponent implements OnInit {
         })
     });
     constructor(
-        private http: HttpClient) { }
+        private http: HttpClient,
+        public snackBar: MatSnackBar,) { }
 
     ngOnInit() {
         this.studentForm.get('dob').setValue({ day: 8, month: 11, year: 2018 });
@@ -41,10 +42,14 @@ export class AddStudentComponent implements OnInit {
         // console.log(productForm.value);
         console.log(studentForm.value);
         this.http.post('http://localhost/vietelite-api/public/student', studentForm.value).subscribe(res => {
-            console.log(res);
+            this.snackBar.open('res','action',{
+              duration: 2000,
+            });           
+
         }, err => {
             console.log('Error occured');
         });
+        
     }
 
 }
