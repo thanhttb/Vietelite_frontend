@@ -8,7 +8,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { Student } from '../student.model';
 import { StudentService } from '../../../../../services/student.service';
-import { catchError, finalize} from "rxjs/operators";
+import { catchError, finalize } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/operators';
 import { merge } from "rxjs/observable/merge";
@@ -27,43 +27,43 @@ import * as moment from 'moment';
 export class ListStudentComponent implements OnInit {
     studentId = -1;
     dataSource = new StudentDataSource(this.studentService);
-    count_student:number 
-    displayedColumns = ['id', 'first_name', 'last_name', 'dob','gender', 'name','phone_1','phone_2','email','actions'];
+    count_student: number
+    displayedColumns = ['id', 'first_name', 'last_name', 'dob', 'gender', 'name', 'phone_1', 'phone_2', 'email', 'actions'];
     constructor(private studentService: StudentService,
-                private dialog: MatDialog) {
+        private dialog: MatDialog) {
     }
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('input') input: ElementRef;
-    @ViewChild(MatSort) sort:MatSort;
+    @ViewChild(MatSort) sort: MatSort;
 
     ngOnInit() {
         this.dataSource.loadStudent(this.studentId);
-        this.studentService.countStudent().subscribe( count => this.count_student = count);
+        this.studentService.countStudent().subscribe(count => this.count_student = count);
         // console.log(this.count_student);
     }
     ngAfterViewInit() {
         // FILTER
-        fromEvent(this.input.nativeElement,'keyup')
+        fromEvent(this.input.nativeElement, 'keyup')
             .pipe(
-                debounceTime(500),
-                distinctUntilChanged(),
-                tap(() => {
-                    this.paginator.pageIndex = 0;
-                    this.loadLessonsPage();
-                })
+            debounceTime(500),
+            distinctUntilChanged(),
+            tap(() => {
+                this.paginator.pageIndex = 0;
+                this.loadLessonsPage();
+            })
             )
             .subscribe();
         // PAGINATION
         this.paginator.page
             .pipe(
-                tap(() => this.loadLessonsPage())
+            tap(() => this.loadLessonsPage())
             )
             .subscribe();
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         merge(this.sort.sortChange, this.paginator.page)
             .pipe(
-                tap(() => this.loadLessonsPage())
-                )
+            tap(() => this.loadLessonsPage())
+            )
             .subscribe();
     }
     loadLessonsPage() {
@@ -76,7 +76,7 @@ export class ListStudentComponent implements OnInit {
     }
     //EDIT
 
-    openDialog(row){
+    openDialog(row) {
         const dialogConfig = new MatDialogConfig();
         console.log('Row Clicked: ', row);
         dialogConfig.disableClose = true;
@@ -88,15 +88,15 @@ export class ListStudentComponent implements OnInit {
             last_name: row.last_name,
             dob: row.dob,
             phone_1: row.phone_1,
-            phone_2:row.phone_2,
-            parent_email: row.parent_email,       
+            phone_2: row.phone_2,
+            parent_email: row.parent_email,
 
-        }        
+        }
 
         const dialogRef = this.dialog.open(EditStudentComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
             data => console.log("Dialog OUtput data: ", data)
-            );
+        );
     }
     onRowClicked(row) {
         console.log('Row Clicked: ', row);
@@ -122,16 +122,16 @@ export class StudentDataSource extends DataSource<Student> {
         this.studentSubject.complete();
         this.loadingSubject.complete();
     }
-    loadStudent(studentId:number, filter = '', 
-                sortDirection = 'asc', pageIndex = 0, pageSize = 10){
+    loadStudent(studentId: number, filter = '',
+        sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
         this.loadingSubject.next(true);
 
         this.studentService.findStudents(studentId, filter, sortDirection, pageIndex, pageSize)
             .pipe(
-                catchError(() => of([])),
-                finalize(() => this.loadingSubject.next(false))
-                )
-            .subscribe( students => this.studentSubject.next(students));
+            catchError(() => of([])),
+            finalize(() => this.loadingSubject.next(false))
+            )
+            .subscribe(students => this.studentSubject.next(students));
     }
 
 
