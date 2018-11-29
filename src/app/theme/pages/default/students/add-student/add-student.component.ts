@@ -21,9 +21,11 @@ export class AddStudentComponent implements OnInit {
 
         parentForm: new FormGroup({
             parent_name: new FormControl("", [Validators.required]),
-            parent_phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),
-            parent_phone_2: new FormControl("", [Validators.minLength(9)]),
+            parent_phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),            
             parent_email: new FormControl("", [Validators.required, Validators.email]),
+            parent_name_2: new FormControl(""),
+            parent_phone_2: new FormControl("", [Validators.minLength(9)]),            
+            parent_email_2: new FormControl("", [Validators.email]),
         })
     });
     constructor(
