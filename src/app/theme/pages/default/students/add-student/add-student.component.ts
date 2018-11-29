@@ -30,7 +30,7 @@ export class AddStudentComponent implements OnInit {
     });
     constructor(
         private http: HttpClient,
-        public snackBar: MatSnackBar,) { }
+        public snackBar: MatSnackBar, ) { }
 
     ngOnInit() {
         this.studentForm.get('dob').setValue({ day: 8, month: 11, year: 2018 });
@@ -44,14 +44,14 @@ export class AddStudentComponent implements OnInit {
         // console.log(productForm.value);
         console.log(studentForm.value);
         this.http.post('http://localhost/vietelite-api/public/student', studentForm.value).subscribe(res => {
-            this.snackBar.open('res','action',{
-              duration: 2000,
-            });           
+            this.snackBar.open('res', 'action', {
+                duration: 2000,
+            });
 
         }, err => {
             console.log('Error occured');
         });
-        
+
     }
 
 }

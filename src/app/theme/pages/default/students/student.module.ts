@@ -7,11 +7,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
     MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
     MatSortModule, MatTableModule, MatFormFieldModule, MatButtonModule, MatDialogModule,
-    MatDatepickerModule,    
+    MatDatepickerModule,
     MatListModule, MatSelectModule, MatSidenavModule, MAT_DATE_LOCALE,
     MatSnackBarModule
 } from '@angular/material';
-import {MatMomentDateModule} from "@angular/material-moment-adapter";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
@@ -55,9 +55,9 @@ const routes: Routes = [
         MatProgressSpinnerModule,
         MatButtonModule,
         MatDialogModule,
-        MatDatepickerModule,    
-        MatListModule, 
-        MatSelectModule, 
+        MatDatepickerModule,
+        MatListModule,
+        MatSelectModule,
         MatSidenavModule,
         MatMomentDateModule,
         MatSnackBarModule
@@ -69,6 +69,6 @@ const routes: Routes = [
         EditStudentComponent,
         EnrollStudentComponent,
     ], entryComponents: [EditStudentComponent],
-    providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-GB'}]
+    providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }]
 })
 export class StudentModule { }

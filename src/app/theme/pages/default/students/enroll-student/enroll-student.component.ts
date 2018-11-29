@@ -11,20 +11,20 @@ import { MatSnackBar } from '@angular/material';
     providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }]
 })
 export class EnrollStudentComponent implements OnInit {
-  //this.myForm.addControl('newControl', new FormControl('', Validators.required));
-  enroll = 0;
-  studentForm = this.fb.group({
-      first_name: new FormControl("", [Validators.required]),
-      last_name: new FormControl("", [Validators.required]),
-      dob: new FormControl(""),      
+    //this.myForm.addControl('newControl', new FormControl('', Validators.required));
+    enroll = 0;
+    studentForm = this.fb.group({
+        first_name: new FormControl("", [Validators.required]),
+        last_name: new FormControl("", [Validators.required]),
+        dob: new FormControl(""),
 
-      parentForm: new FormGroup({
-        parent_name: new FormControl("", [Validators.required]),
-        parent_phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),          
-        parent_email: new FormControl("", [Validators.required, Validators.email]),
-      }),
+        parentForm: new FormGroup({
+            parent_name: new FormControl("", [Validators.required]),
+            parent_phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),
+            parent_email: new FormControl("", [Validators.required, Validators.email]),
+        }),
 
-      enrollForm: this.fb.array([this.buildEnroll()])
+        enrollForm: this.fb.array([this.buildEnroll()])
     });
     constructor(
         private http: HttpClient,
@@ -33,18 +33,18 @@ export class EnrollStudentComponent implements OnInit {
 
     ngOnInit() {
         this.studentForm.get('dob').setValue({ day: 8, month: 11, year: 2001 });
-        
+
     }
-    buildEnroll(){
+    buildEnroll() {
         return new FormGroup({
-          subject: new FormControl("",[Validators.required]),
-          class: new FormControl("",[Validators.required]),
-          appointment: new FormControl(""),   
-          note: new FormControl("")
+            subject: new FormControl("", [Validators.required]),
+            class: new FormControl("", [Validators.required]),
+            appointment: new FormControl(""),
+            note: new FormControl("")
         });
     }
-    addEnroll(){
-      this.enroll++;
+    addEnroll() {
+        this.enroll++;
 
     }
     onSubmit() {
@@ -56,14 +56,14 @@ export class EnrollStudentComponent implements OnInit {
         // console.log(productForm.value);
         console.log(studentForm.value);
         this.http.post('http://localhost/vietelite-api/public/enroll', studentForm.value).subscribe(res => {
-            this.snackBar.open('res','action',{
-              duration: 2000,
-            });           
+            this.snackBar.open('res', 'action', {
+                duration: 2000,
+            });
 
         }, err => {
             console.log('Error occured');
         });
-        
+
     }
 
 }
