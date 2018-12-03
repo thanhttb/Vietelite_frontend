@@ -1,18 +1,26 @@
 import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { Http, Response,Headers } from "@angular/http";
 import "rxjs/add/operator/map";
-@Injectable()
+
+const httpOptions = {
+        headers: new Headers({
+            'Content-Type':  'application/json',
+        })
+    }
+@Injectable()    
 export class AuthenticationService {
 
     constructor(private http: Http) {
     }
 
-    login(email: string, password: string) {
-        return this.http.post(  '/api/login', JSON.stringify({ email: email, password: password }))
+    login(data) {
+        return this.http.post( 'http://localhost/vietelite-api/public/api/auth/login', data, httpOptions)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
-                if (user && user.token) {
+                console.log(user);
+                if (user && user.access_token) {
+                    console.log(user);
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }

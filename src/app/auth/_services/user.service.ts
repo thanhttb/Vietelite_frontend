@@ -10,12 +10,23 @@ const httpOptions = {
     }
 @Injectable()
 export class UserService {
+    iss = {
+        login: 'http://localhost/vietelite-api/public/api/auth/login',
+        signup: 'http://localhost/vietelite-api/public/api/auth/signup'
+    }
     constructor(private http: Http) {
     }
 
 
     verify() {
-        return this.http.get('/api/verify', this.jwt()).map((response: Response) => response.json());
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (currentUser && currentUser.access_token) {
+            const token = currentUser.access_token;
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            // console.log(payload);
+            return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
+        }        
     }
 
     forgotPassword(email: string) {
@@ -31,7 +42,7 @@ export class UserService {
     }
 
     create(user) {
-        return this.http.post('http://localhost/vietelite-api/public/api/auth/signup', user, httpOptions);
+        return this.http.post(this.iss.signup, user, httpOptions);
     }
 
     update(user: User) {
@@ -47,8 +58,8 @@ export class UserService {
     private jwt() {
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+        if (currentUser && currentUser.access_token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.access_token });
             return new RequestOptions({ headers: headers });
         }
     }

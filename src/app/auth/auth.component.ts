@@ -56,11 +56,12 @@ export class AuthComponent implements OnInit {
                 Helpers.setLoading(false);
                 LoginCustom.init();
             });
+        
     }
 
     signin() {
         this.loading = true;
-        this._authService.login(this.model.email, this.model.password).subscribe(
+        this._authService.login(this.model).subscribe(
             data => {
                 this._router.navigate([this.returnUrl]);
             },
