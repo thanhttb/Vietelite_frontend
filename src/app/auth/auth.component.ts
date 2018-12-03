@@ -33,6 +33,7 @@ export class AuthComponent implements OnInit {
     @ViewChild('alertForgotPass',
         { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
 
+
     constructor(
         private _router: Router,
         private _script: ScriptLoaderService,

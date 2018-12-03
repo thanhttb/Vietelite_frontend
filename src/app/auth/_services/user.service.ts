@@ -3,10 +3,16 @@ import { Headers, Http, RequestOptions, Response } from "@angular/http";
 
 import { User } from "../_models/index";
 
+const httpOptions = {
+        headers: new Headers({
+            'Content-Type':  'application/json',
+        })
+    }
 @Injectable()
 export class UserService {
     constructor(private http: Http) {
     }
+
 
     verify() {
         return this.http.get('/api/verify', this.jwt()).map((response: Response) => response.json());
@@ -24,8 +30,8 @@ export class UserService {
         return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
     }
 
-    create(user: User) {
-        return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    create(user) {
+        return this.http.post('http://localhost/vietelite-api/public/api/auth/signup', user, httpOptions);
     }
 
     update(user: User) {
