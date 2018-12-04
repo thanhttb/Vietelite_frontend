@@ -18,7 +18,6 @@ import { DefaultComponent } from '../default.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { ListStudentComponent } from './list-student/list-student.component';
 import { EditStudentComponent } from './edit-student/edit-student.component';
-import { EnrollStudentComponent } from './enroll-student/enroll-student.component';
 const routes: Routes = [
     {
         "path": "",
@@ -32,10 +31,7 @@ const routes: Routes = [
                 "path": "list",
                 "component": ListStudentComponent
             },
-            {
-                "path": "enroll",
-                "component": EnrollStudentComponent
-            }
+            
         ]
     }
 ];
@@ -67,7 +63,6 @@ const routes: Routes = [
         AddStudentComponent,
         ListStudentComponent,
         EditStudentComponent,
-        EnrollStudentComponent,
     ], entryComponents: [EditStudentComponent],
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }]
 })

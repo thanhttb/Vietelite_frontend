@@ -17,7 +17,10 @@ const routes: Routes = [
                 'path': 'students',
                 'loadChildren': '.\/pages\/default\/students\/student.module#StudentModule',
             },
-
+            {
+                'path': 'enrolls',
+                'loadChildren': '.\/pages\/default\/enrolls\/enrolls.module#EnrollsModule',
+            },
             {
                 'path': '',
                 'redirectTo': 'index',

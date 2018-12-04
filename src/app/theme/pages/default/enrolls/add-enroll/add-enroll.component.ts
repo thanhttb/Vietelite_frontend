@@ -5,12 +5,12 @@ import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 @Component({
-    selector: 'app-enroll-student',
-    templateUrl: './enroll-student.component.html',
+    selector: 'app-add-enroll',
+    templateUrl: './add-enroll.component.html',
     styles: [],
     providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }]
 })
-export class EnrollStudentComponent implements OnInit {
+export class AddEnrollComponent implements OnInit {
     //this.myForm.addControl('newControl', new FormControl('', Validators.required));
     enroll = 0;
     studentForm = this.fb.group({
@@ -36,17 +36,16 @@ export class EnrollStudentComponent implements OnInit {
 
     }
     buildEnroll() {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         return new FormGroup({
             subject: new FormControl("", [Validators.required]),
             class: new FormControl("", [Validators.required]),
             appointment: new FormControl(""),
-            note: new FormControl("")
+            note: new FormControl(""),
+            user_id: new FormControl(currentUser.user_id)
         });
     }
-    addEnroll() {
-        this.enroll++;
 
-    }
     onSubmit() {
         console.warn(this.studentForm.value);
     }
@@ -56,10 +55,9 @@ export class EnrollStudentComponent implements OnInit {
         // console.log(productForm.value);
         console.log(studentForm.value);
         this.http.post('http://localhost/vietelite-api/public/enroll', studentForm.value).subscribe(res => {
-            this.snackBar.open('res', 'action', {
+            this.snackBar.open('Đã Thêm Thành Công', 'Đóng', {
                 duration: 2000,
             });
-
         }, err => {
             console.log('Error occured');
         });

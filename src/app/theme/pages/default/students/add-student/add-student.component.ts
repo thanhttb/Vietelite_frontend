@@ -44,7 +44,7 @@ export class AddStudentComponent implements OnInit {
         // console.log(productForm.value);
         console.log(studentForm.value);
         this.http.post('http://localhost/vietelite-api/public/student', studentForm.value).subscribe(res => {
-            this.snackBar.open('res', 'action', {
+            this.snackBar.open('Đã Thêm Thành Công', 'Đóng', {
                 duration: 2000,
             });
 

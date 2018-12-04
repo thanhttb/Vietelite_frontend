@@ -6,9 +6,10 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class StudentService {
-    private all_student_url = "http://localhost/vietelite-api/public/students";
-    private find_student_url = "http://localhost/vietelite-api/public/student";
-    private count_students_url = "http://localhost/vietelite-api/public/student/count";
+    private api = "http://localhost/vietelite-api/public"
+    private all_student_url = this.api + "students";
+    private find_student_url = this.api +"/student";
+    private count_students_url = this.api + "/student/count";
     constructor(private http: HttpClient) { }
 
     getStudent(): Observable<Student[]> {
