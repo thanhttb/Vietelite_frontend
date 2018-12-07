@@ -5,34 +5,36 @@ import { HttpClient } from '@angular/common/http';
 import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { DataSource } from '@angular/cdk/collections';
 import { catchError, finalize } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/operators';
 import { merge } from "rxjs/observable/merge";
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { MatDatepickerModule } from '@angular/material';
+import * as moment from 'moment';
+import { DataSource } from '@angular/cdk/collections';
 
 import { Student } from '../../students/student.model';
 import { ListEnroll } from './list-enroll.model';
-import { StudentService } from '../../../../../services/student.service';
+import { EnrollService } from '../../../../../services/enroll.service';
 import { EditStudentComponent } from '../../students/edit-student/edit-student.component';
 
-import * as moment from 'moment';
 
 @Component({
     selector: 'app-list-enroll',
     templateUrl: './list-enroll.component.html',
     styleUrls: ['./list-enroll.component.css'],
-    providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }, MatDatepickerModule]
+    providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }, MatDatepickerModule, EnrollService]
 })
 
 export class ListEnrollComponent implements OnInit {
     studentId = -1;
-    dataSource = new StudentDataSource(this.studentService);
-    count_student: number
-    displayedColumns = ['id', 'first_name', 'last_name', 'dob', 'gender', 'name', 'phone_1', 'phone_2', 'email', 'actions'];
-    constructor(private studentService: StudentService,
+    option:string;
+    dataSource = new EnrollDataSource(this.enrollService);
+    count_student: number = 4;
+    displayedColumns = ['id', 'student_name', 'dob', 'name', 'phone_1', 'phone_2', 'email', 'class','subject',
+                        'appointment_status','result','result_status','official_class','actions'];
+    constructor(private enrollService: EnrollService,
         private dialog: MatDialog) {
     }
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,8 +42,8 @@ export class ListEnrollComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
 
     ngOnInit() {
-        this.dataSource.loadStudent(this.studentId);
-        this.studentService.countStudent().subscribe(count => this.count_student = count);
+        this.dataSource.loadEnroll('');
+        //this.enrollService.countStudent().subscribe(count => this.count_student = count);
         // console.log(this.count_student);
     }
     ngAfterViewInit() {
@@ -52,26 +54,26 @@ export class ListEnrollComponent implements OnInit {
             distinctUntilChanged(),
             tap(() => {
                 this.paginator.pageIndex = 0;
-                this.loadLessonsPage();
+                this.loadEnrollPage();
             })
             )
             .subscribe();
         // PAGINATION
         this.paginator.page
             .pipe(
-            tap(() => this.loadLessonsPage())
+            tap(() => this.loadEnrollPage())
             )
             .subscribe();
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         merge(this.sort.sortChange, this.paginator.page)
             .pipe(
-            tap(() => this.loadLessonsPage())
+            tap(() => this.loadEnrollPage())
             )
             .subscribe();
     }
-    loadLessonsPage() {
-        this.dataSource.loadStudent(
-            this.studentId,
+    loadEnrollPage() {
+        this.dataSource.loadEnroll(
+            this.option,
             this.input.nativeElement.value,
             this.sort.direction,
             this.paginator.pageIndex,
@@ -106,34 +108,33 @@ export class ListEnrollComponent implements OnInit {
     }
 }
 
-
-
-
-
-export class StudentDataSource extends DataSource<Student> {
-    private studentSubject = new BehaviorSubject<Student[]>([]);
+export class EnrollDataSource extends DataSource<ListEnroll>{
+  private enrollSubject = new BehaviorSubject<ListEnroll[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     public loading$ = this.loadingSubject.asObservable();
-    constructor(private studentService: StudentService) {
+    constructor(private enrollService: EnrollService) {
         super();
     }
-    connect(): Observable<Student[]> {
-        return this.studentSubject.asObservable();
-    }
-    disconnect() {
-        this.studentSubject.complete();
-        this.loadingSubject.complete();
-    }
-    loadStudent(studentId: number, filter = '',
+  connect() : Observable<ListEnroll[]>{
+    return this.enrollSubject.asObservable();
+
+  }
+
+  disconnect(){
+    this.enrollSubject.complete();
+    this.loadingSubject.complete();
+  }
+
+  loadEnroll(option: string, filter = '',
         sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
         this.loadingSubject.next(true);
 
-        this.studentService.findStudents(studentId, filter, sortDirection, pageIndex, pageSize)
+        this.enrollService.getEnrolls(option, filter, sortDirection, pageIndex, pageSize)
             .pipe(
             catchError(() => of([])),
             finalize(() => this.loadingSubject.next(false))
             )
-            .subscribe(students => this.studentSubject.next(students));
+            .subscribe(enrolls => this.enrollSubject.next(enrolls));
     }
 }
