@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatDialogConfig } from "@angular/material";
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatDialogConfig,  MatDatepickerModule, MatSnackBar } from "@angular/material";
 import { HttpClient } from '@angular/common/http';
 import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -14,8 +14,8 @@ import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/
 import { merge } from "rxjs/observable/merge";
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { EditStudentComponent } from '../edit-student/edit-student.component';
-import { MatDatepickerModule } from '@angular/material';
 import * as moment from 'moment';
+
 
 @Component({
     selector: 'app-list-student',
@@ -30,7 +30,8 @@ export class ListStudentComponent implements OnInit {
     count_student: number
     displayedColumns = ['id', 'first_name', 'last_name', 'dob', 'gender', 'name', 'phone_1', 'phone_2', 'email', 'actions'];
     constructor(private studentService: StudentService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar) {
     }
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('input') input: ElementRef;
@@ -78,24 +79,31 @@ export class ListStudentComponent implements OnInit {
 
     openDialog(row) {
         const dialogConfig = new MatDialogConfig();
-        console.log('Row Clicked: ', row);
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-
-        dialogConfig.data = {
-            id: row.student_id,
-            first_name: row.first_name,
-            last_name: row.last_name,
-            dob: row.dob,
-            phone_1: row.phone_1,
-            phone_2: row.phone_2,
-            parent_email: row.parent_email,
-
-        }
-
+        dialogConfig.data = row;
+        //this.studentService.findStudents(row.student_id).subscribe(data => dialogConfig.data = data[0]);
+        console.log('Row Clicked: ', dialogConfig.data);
         const dialogRef = this.dialog.open(EditStudentComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
-            data => console.log("Dialog OUtput data: ", data)
+            data => {
+                if(data){
+                    this.studentService.updateStudents(row.student_id, data).subscribe(
+                    res => {
+                        this.snackBar.open('Sửa thành công', 'Đóng',{
+                            duration: 2000,
+                        });
+                        this.loadLessonsPage();
+                    },
+                    err => {
+                        this.snackBar.open('Lỗi xảy ra', 'Đóng',{
+                            duration:2000
+                        })
+                    }
+                    )
+                }
+                
+            }
         );
     }
     onRowClicked(row) {

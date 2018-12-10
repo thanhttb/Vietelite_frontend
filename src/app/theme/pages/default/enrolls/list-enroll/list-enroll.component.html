@@ -11,7 +11,10 @@
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
-                <li class="m-nav__separator">
+                <li class="m-nav__sepa
+
+
+                rator">
                     -
                 </li>
                 <li class="m-nav__item">
@@ -57,7 +60,7 @@
             <input matInput placeholder="Search Student" #input>
         </mat-input-container>
 
-        <div class="">
+        <div id="">
 
           <mat-table [dataSource]="dataSource"  matSort matSortActive="seqNo" matSortDirection="asc" matSortDisableClear>
            
@@ -121,7 +124,7 @@
                 </mat-cell>
             </ng-container> 
            
-
+            
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <div class="spinner-container" *ngIf="dataSource.loading$ | async">
                 <mat-spinner></mat-spinner>

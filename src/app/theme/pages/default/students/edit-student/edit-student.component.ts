@@ -25,11 +25,20 @@ export class EditStudentComponent implements OnInit {
         first_name: new FormControl("", [Validators.required]),
         last_name: new FormControl("", [Validators.required]),
         dob: new FormControl(moment([2017, 0, 1])),
+        gender: new FormControl(""),
+        phone: new FormControl(""),
+        email: new FormControl(""),
+        class: new FormControl(""),
+        school: new FormControl(""),
         parentForm: new FormGroup({
-            parent_name: new FormControl("", [Validators.required]),
-            parent_phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),
-            parent_phone_2: new FormControl("", [Validators.minLength(9)]),
+            name: new FormControl("", [Validators.required]),
+            phone_1: new FormControl("", [Validators.required, Validators.minLength(9)]),
+            phone_2: new FormControl("", [Validators.minLength(9)]),
             parent_email: new FormControl("", [Validators.required, Validators.email]),
+            parent_email_2: new FormControl(""),
+            work: new FormControl(""),
+            address: new FormControl("")
+
         })
     });
     constructor(
@@ -40,8 +49,20 @@ export class EditStudentComponent implements OnInit {
             first_name: data.first_name,
             last_name: data.last_name,
             dob: data.dob,
-            parent_phone1: data.phone_1,
-            parent_phone2: data.phone2
+            gender: data.gender,
+            class: data.class,
+            school: data.school,
+            phone: data.phone,
+            email: data.email,
+            parentForm: {
+                name: data.name,
+                parent_email: data.parent_email,
+                parent_email_2: data.parent_email_2,
+                work: data.work,
+                address: data.address,
+                phone_1: data.phone_1,
+                phone_2: data.phone_2
+            }
         });
     }
 

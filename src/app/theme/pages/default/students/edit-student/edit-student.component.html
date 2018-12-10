@@ -1,45 +1,80 @@
-<h2 mat-dialog-title>{{description}}</h2>
+<h2 mat-dialog-title>Thông tin học sinh</h2>
 
 <mat-dialog-content [formGroup]="studentForm">
-  
-    <mat-form-field>
-        <input matInput
-                placeholder="Họ"
-               formControlName="first_name">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput
-                placeholder="Tên"
-               formControlName="last_name">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput
-                placeholder="Tên"
-               formControlName="last_name">
-    </mat-form-field>
+    <div class="row">
+        <div class="col">
+            <mat-form-field>
+                <input matInput
+                       placeholder="Họ"
+                       formControlName="last_name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Tên"
+                       formControlName="first_name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="myDatepicker" formControlName="dob" placeholder="Ngày sinh">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="SĐT"
+                       formControlName="phone">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Email"
+                       formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Lớp"
+                       formControlName="class">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Trường"
+                       formControlName="school">
+            </mat-form-field>
+            
+        </div>
+        <div class="col" formGroupName = "parentForm">
+            <mat-form-field>
+                <input matInput
+                        placeholder="Họ tên Phụ huynh"
+                       formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="SĐT1 phụ huynh "
+                       formControlName="phone_1">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Email1 phụ huynh"
+                       formControlName="parent_email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="SĐT2 phụ huynh"
+                       formControlName="phone_2">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Email2 phụ huynh"
+                       formControlName="parent_email_2">
+            </mat-form-field>
+        </div>
+    </div>
     
-    <mat-form-field>
+   
+    
+   
 
-        <input matInput [matDatepicker]="myDatepicker"
-            formControlName="dob">
-
-        <mat-datepicker-toggle matSuffix
-                               [for]="myDatepicker">
-
-        </mat-datepicker-toggle>
-
-        <mat-datepicker #myDatepicker></mat-datepicker>
-
-    </mat-form-field>
-
-    <mat-form-field>
-
-        <textarea matInput placeholder="Description"
-            formControlName="longDescription">
-
-        </textarea>
-
-    </mat-form-field>
+    
       ....
  
 </mat-dialog-content>

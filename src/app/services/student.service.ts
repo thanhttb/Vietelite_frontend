@@ -10,6 +10,7 @@ export class StudentService {
     private all_student_url = this.api + "students";
     private find_student_url = this.api +"/student";
     private count_students_url = this.api + "/student/count";
+    private update_student_url = this.api + "/student/";
     constructor(private http: HttpClient) { }
 
     getStudent(): Observable<Student[]> {
@@ -28,4 +29,8 @@ export class StudentService {
                 .set('pageSize', pageSize.toString())
         }).pipe(map(res => { res['payload'] = res; return res['payload'] }));
     }
+    updateStudents(studentID: number, data):Observable<any> {
+        return this.http.put(this.update_student_url + studentID, data);
+    }
+
 }
