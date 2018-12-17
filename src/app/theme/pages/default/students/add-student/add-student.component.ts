@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material';
     providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }]
 })
 export class AddStudentComponent implements OnInit {
+    private token = JSON.parse(localStorage.getItem('currentUser')).access_token;
     studentForm = new FormGroup({
         first_name: new FormControl("", [Validators.required]),
         last_name: new FormControl("", [Validators.required]),
@@ -31,7 +32,6 @@ export class AddStudentComponent implements OnInit {
     constructor(
         private http: HttpClient,
         public snackBar: MatSnackBar, ) { }
-
     ngOnInit() {
         this.studentForm.get('dob').setValue({ day: 8, month: 11, year: 2018 });
     }
@@ -43,7 +43,10 @@ export class AddStudentComponent implements OnInit {
         // console.log('Form successful submit.');
         // console.log(productForm.value);
         console.log(studentForm.value);
-        this.http.post('http://localhost/vietelite-api/public/student', studentForm.value).subscribe(res => {
+        this.http.post('http://localhost/vietelite-api/public/student', studentForm.value,{
+               params : new HttpParams()
+                   .set('token', this.token)
+        }).subscribe(res => {
             this.snackBar.open('Đã Thêm Thành Công', 'Đóng', {
                 duration: 2000,
             });

@@ -17,6 +17,9 @@ import { LayoutModule } from '../../../layouts/layout.module';
 import { AddEnrollComponent } from './add-enroll/add-enroll.component';
 import { ListEnrollComponent } from './list-enroll/list-enroll.component';
 import { DefaultComponent } from '../default.component';
+import { KtdvEnrollComponent } from './ktdv-enroll/ktdv-enroll.component';
+import { GetMarkEnrollComponent } from './get-mark-enroll/get-mark-enroll.component';
+import { ResultEnrollComponent } from './result-enroll/result-enroll.component';
 const routes: Routes = [
     {
         "path": "",
@@ -29,6 +32,18 @@ const routes: Routes = [
             {
                 "path": "list",
                 "component": ListEnrollComponent
+            },
+            {
+                "path" : "ktdv",
+                "component": KtdvEnrollComponent
+            },
+            {
+                "path" : "mark",
+                "component": GetMarkEnrollComponent
+            },
+            {
+                "path" : "result",
+                "component": ResultEnrollComponent
             },
             
         ]
@@ -60,7 +75,7 @@ const routes: Routes = [
   exports: [
    	RouterModule
    ],
-  declarations: [AddEnrollComponent, ListEnrollComponent],
+  declarations: [AddEnrollComponent, ListEnrollComponent, KtdvEnrollComponent, GetMarkEnrollComponent, ResultEnrollComponent],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }]
 })
 export class EnrollsModule { }

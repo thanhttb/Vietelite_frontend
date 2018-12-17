@@ -1,5 +1,5 @@
-import { EnrollService } from '../../../../../services/enroll.service';
-import {ListEnroll} from './list-enroll.model';
+import { EnrollService } from '../../../../services/enroll.service';
+import {ListEnroll} from './list-enroll/list-enroll.model';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError, finalize } from "rxjs/operators";

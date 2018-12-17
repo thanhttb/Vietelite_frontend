@@ -13,12 +13,11 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { MatDatepickerModule } from '@angular/material';
 import * as moment from 'moment';
 import { DataSource } from '@angular/cdk/collections';
-
 import { Student } from '../../students/student.model';
 import { ListEnroll } from './list-enroll.model';
 import { EnrollService } from '../../../../../services/enroll.service';
 import { EditStudentComponent } from '../../students/edit-student/edit-student.component';
-
+import { EnrollDataSource } from '../enroll-datasource';
 
 @Component({
     selector: 'app-list-enroll',
@@ -42,6 +41,7 @@ export class ListEnrollComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
 
     ngOnInit() {
+       // this.dataSource = new EnrollDataSource(this.enrollService);
         this.dataSource.loadEnroll('');
         //this.enrollService.countStudent().subscribe(count => this.count_student = count);
         // console.log(this.count_student);
@@ -106,35 +106,4 @@ export class ListEnrollComponent implements OnInit {
     onRowClicked(row) {
         console.log('Row Clicked: ', row);
     }
-}
-
-export class EnrollDataSource extends DataSource<ListEnroll>{
-  private enrollSubject = new BehaviorSubject<ListEnroll[]>([]);
-    private loadingSubject = new BehaviorSubject<boolean>(false);
-
-    public loading$ = this.loadingSubject.asObservable();
-    constructor(private enrollService: EnrollService) {
-        super();
-    }
-  connect() : Observable<ListEnroll[]>{
-    return this.enrollSubject.asObservable();
-
-  }
-
-  disconnect(){
-    this.enrollSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadEnroll(option: string, filter = '',
-        sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
-        this.loadingSubject.next(true);
-
-        this.enrollService.getEnrolls(option, filter, sortDirection, pageIndex, pageSize)
-            .pipe(
-            catchError(() => of([])),
-            finalize(() => this.loadingSubject.next(false))
-            )
-            .subscribe(enrolls => this.enrollSubject.next(enrolls));
-    }
-}
+} 

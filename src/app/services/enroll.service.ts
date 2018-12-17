@@ -8,12 +8,13 @@ import { map } from "rxjs/operators";
 export class EnrollService {
     private api = "http://localhost/vietelite-api/public"
     private list_enroll_url = this.api + "/enroll/list";
-
+    private token = JSON.parse(localStorage.getItem('currentUser')).access_token;
     constructor(private http: HttpClient) { }
 
     getEnrolls(option: string, filter: string = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<ListEnroll[]> {
         return this.http.get(this.list_enroll_url, {
             params : new HttpParams()
+                .set('token', this.token)
                 .set('option', option)
                 .set('filter', filter)
                 .set('sortOrder', sortOrder)
