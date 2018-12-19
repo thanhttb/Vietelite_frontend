@@ -22,6 +22,10 @@ const routes: Routes = [
                 'loadChildren': '.\/pages\/default\/enrolls\/enrolls.module#EnrollsModule',
             },
             {
+                'path': 'classes',
+                'loadChildren': '.\/pages\/default\/classes\/classes.module#ClassesModule',
+            },
+            {
                 'path': '',
                 'redirectTo': 'index',
                 'pathMatch': 'full',

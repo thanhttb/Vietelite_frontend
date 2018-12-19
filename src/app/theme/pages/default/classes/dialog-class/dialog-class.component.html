@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Thông tin học sinh</h2>
+
+<mat-dialog-content [formGroup]="classForm">
+    <div class="row">
+        <div class="col">
+            <mat-form-field>
+                <input matInput
+                       placeholder="Mã lớp"
+                       formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Tên lớp"
+                       formControlName="description">
+            </mat-form-field>
+           
+            <mat-form-field>
+                <input matInput
+                       placeholder="Khối"
+                       formControlName="class">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Học phí"
+                       formControlName="tuition">
+            </mat-form-field>
+            
+        </div>
+        <div class="col" >
+           <mat-form-field>
+                <textarea matInput
+                       placeholder="Ghi chú"
+                       formControlName="note"></textarea>
+            </mat-form-field>
+            
+            <mat-form-field>
+                <textarea matInput
+                       placeholder="Thời gian"
+                       formControlName="time"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <textarea matInput
+                       placeholder="Giáo viên"
+                       formControlName="teacher"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       placeholder="Sĩ số"
+                       formControlName="active_students">
+            </mat-form-field>
+        </div>
+    </div>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

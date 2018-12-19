@@ -6,43 +6,40 @@ import { NgbDateCustomParserFormatter } from '../../../../../extra/dateformat';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
-import { Student } from '../student.model';
-import { StudentService } from '../../../../../services/student.service';
+import { Class } from '../classes.model';
+import { ClassService } from '../../../../../services/class.service';
 import { catchError, finalize } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/operators';
 import { merge } from "rxjs/observable/merge";
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { EditStudentComponent } from '../edit-student/edit-student.component';
+import { DialogClassComponent } from '../dialog-class/dialog-class.component';
 import * as moment from 'moment';
-
-
 @Component({
-    selector: 'app-list-student',
-    templateUrl: './list-student.component.html',
-    styleUrls: ['./list-student.component.css'],
-    providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }, MatDatepickerModule]
+  selector: 'app-list-class',
+  templateUrl: 'list-class.component.html',
+  styles: [],
+  providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }, MatDatepickerModule, ClassService]
 })
+export class ListClassComponent implements OnInit {
+  dataSource = new ClassDataSource(this.ClassService);
+  count_class: number
+  displayedColumns = ['id','name','description','class','note','tuition','time','teacher','active_student','edit'];
+    
+  constructor(private ClassService: ClassService,
+      private dialog: MatDialog,
+      private snackBar: MatSnackBar) {
+  }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatSort) sort: MatSort;
 
-export class ListStudentComponent implements OnInit {
-    studentId = -1;
-    dataSource = new StudentDataSource(this.studentService);
-    count_student: number
-    displayedColumns = ['id', 'first_name', 'last_name', 'dob', 'gender', 'name', 'phone_1', 'phone_2', 'email', 'actions'];
-    constructor(private studentService: StudentService,
-        private dialog: MatDialog,
-        private snackBar: MatSnackBar) {
-    }
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild('input') input: ElementRef;
-    @ViewChild(MatSort) sort: MatSort;
 
-    ngOnInit() {
-        this.dataSource.loadStudent(this.studentId);
-        this.studentService.countStudent().subscribe(count => this.count_student = count);
-        // console.log(this.count_student);
-    }
-    ngAfterViewInit() {
+  ngOnInit() {
+      this.dataSource.loadClasses();
+
+  }
+  ngAfterViewInit() {
         // FILTER
         fromEvent(this.input.nativeElement, 'keyup')
             .pipe(
@@ -68,8 +65,7 @@ export class ListStudentComponent implements OnInit {
             .subscribe();
     }
     loadLessonsPage() {
-        this.dataSource.loadStudent(
-            this.studentId,
+        this.dataSource.loadClasses(
             this.input.nativeElement.value,
             this.sort.direction,
             this.paginator.pageIndex,
@@ -77,18 +73,18 @@ export class ListStudentComponent implements OnInit {
     }
     //EDIT
 
-    openDialog(row) {
+    openDialog(row, mode:string) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = row;
-        //this.studentService.findStudents(row.student_id).subscribe(data => dialogConfig.data = data[0]);
+        //this.ClassService.findclasss(row.class_id).subscribe(data => dialogConfig.data = data[0]);
         console.log('Row Clicked: ', dialogConfig.data);
-        const dialogRef = this.dialog.open(EditStudentComponent, dialogConfig);
+        const dialogRef = this.dialog.open(DialogClassComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
             data => {
                 if(data){
-                    this.studentService.updateStudents(row.student_id, data).subscribe(
+                    this.ClassService.updateClasses(row.class_id, data).subscribe(
                     res => {
                         this.snackBar.open('Sửa thành công', 'Đóng',{
                             duration: 2000,
@@ -106,34 +102,31 @@ export class ListStudentComponent implements OnInit {
             }
         );
     }
-    onRowClicked(row) {
-        console.log('Row Clicked: ', row);
-    }
 }
-export class StudentDataSource extends DataSource<Student> {
-    private studentSubject = new BehaviorSubject<Student[]>([]);
+export class ClassDataSource extends DataSource<Class> {
+    private classSubject = new BehaviorSubject<Class[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     public loading$ = this.loadingSubject.asObservable();
-    constructor(private studentService: StudentService) {
+    constructor(private classService: ClassService) {
         super();
     }
-    connect(): Observable<Student[]> {
-        return this.studentSubject.asObservable();
+    connect(): Observable<Class[]> {
+        return this.classSubject.asObservable();
     }
     disconnect() {
-        this.studentSubject.complete();
+        this.classSubject.complete();
         this.loadingSubject.complete();
     }
-    loadStudent(studentId: number, filter = '',
+    loadClasses(filter = '',
         sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
         this.loadingSubject.next(true);
 
-        this.studentService.findStudents(studentId, filter, sortDirection, pageIndex, pageSize)
+        this.classService.findClasses(filter, sortDirection, pageIndex, pageSize)
             .pipe(
             catchError(() => of([])),
             finalize(() => this.loadingSubject.next(false))
             )
-            .subscribe(students => this.studentSubject.next(students));
+            .subscribe(classs => this.classSubject.next(classs));
     }
 }
